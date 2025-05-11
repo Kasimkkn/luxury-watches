@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#121212] text-white">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">LUXURY WATCHES</h3>
+            <h3 className="text-xl font-bold mb-4 font-playfair">LUXURY WATCHES</h3>
             <p className="text-gray-300 mb-4">
               Exceptional timepieces for extraordinary individuals. Offering authenticated luxury watches with guaranteed quality.
             </p>
@@ -32,7 +32,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Shop</h3>
+            <h3 className="text-lg font-semibold mb-4 font-playfair">Shop</h3>
             <ul className="space-y-2">
               <li><Link to="/watches" className="text-gray-300 hover:text-primary">All Watches</Link></li>
               <li><Link to="/brands" className="text-gray-300 hover:text-primary">Brands</Link></li>
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Information</h3>
+            <h3 className="text-lg font-semibold mb-4 font-playfair">Information</h3>
             <ul className="space-y-2">
               <li><Link to="/about" className="text-gray-300 hover:text-primary">About Us</Link></li>
               <li><Link to="/authentication" className="text-gray-300 hover:text-primary">Authentication</Link></li>
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 font-playfair">Contact</h3>
             <ul className="space-y-2">
               <li className="text-gray-300">Mumbai, India</li>
               <li><a href="tel:+919876543210" className="text-gray-300 hover:text-primary">+91 98765 43210</a></li>
@@ -68,7 +68,7 @@ const Footer = () => {
                   placeholder="Your email"
                   className="bg-gray-800 text-white px-3 py-2 rounded-l-md focus:outline-none focus:ring-1 focus:ring-primary w-full"
                 />
-                <button className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-md">
+                <button className="bg-primary hover:bg-primary/90 text-black px-4 py-2 rounded-r-md font-medium">
                   Subscribe
                 </button>
               </div>
