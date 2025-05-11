@@ -25,7 +25,7 @@ const Hero = () => {
             <div className="relative aspect-square max-w-lg mx-auto">
               <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1080" alt="Luxury Watch" className="h-full w-full object-cover rounded-lg shadow-2xl" />
               <div className="absolute -bottom-6 -right-6 bg-gradient-to-t p-4 rounded-lg shadow-xl">
-                <p className="text-black font-bold">Premium Collection</p>
+                <p className="text-white font-bold">Premium Collection</p>
                 <p className="text-gray-600 text-sm">Authenticity Guaranteed</p>
               </div>
             </div>
