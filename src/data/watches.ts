@@ -1,4 +1,3 @@
-
 import { Watch } from "@/types";
 
 export const watches: Watch[] = [
@@ -152,17 +151,18 @@ export const watches: Watch[] = [
   }
 ];
 
+// Update brands to be objects with id, name, country, and founded properties
 export const brands = [
-  "Rolex",
-  "Patek Philippe",
-  "Audemars Piguet",
-  "Omega",
-  "Cartier",
-  "Jaeger-LeCoultre",
-  "Vacheron Constantin",
-  "A. Lange & Söhne",
-  "IWC",
-  "Breitling"
+  { id: "rolex", name: "Rolex", country: "Switzerland", founded: "1905" },
+  { id: "patek-philippe", name: "Patek Philippe", country: "Switzerland", founded: "1839" },
+  { id: "audemars-piguet", name: "Audemars Piguet", country: "Switzerland", founded: "1875" },
+  { id: "omega", name: "Omega", country: "Switzerland", founded: "1848" },
+  { id: "cartier", name: "Cartier", country: "France", founded: "1847" },
+  { id: "jaeger-lecoultre", name: "Jaeger-LeCoultre", country: "Switzerland", founded: "1833" },
+  { id: "vacheron-constantin", name: "Vacheron Constantin", country: "Switzerland", founded: "1755" },
+  { id: "a-lange-sohne", name: "A. Lange & Söhne", country: "Germany", founded: "1845" },
+  { id: "iwc", name: "IWC", country: "Switzerland", founded: "1868" },
+  { id: "breitling", name: "Breitling", country: "Switzerland", founded: "1884" }
 ];
 
 export const priceRanges = [

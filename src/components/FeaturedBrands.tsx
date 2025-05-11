@@ -2,6 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { brands } from "@/data/watches";
+import { Brand } from "@/types";
 
 const FeaturedBrands = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const FeaturedBrands = () => {
         <h2 className="text-3xl font-bold text-white font-playfair mb-8 text-center">Featured Brands</h2>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
-          {featuredBrands.map((brand) => (
+          {featuredBrands.map((brand: Brand) => (
             <div 
               key={brand.id}
               onClick={() => navigate(`/brands/${brand.id}`)}

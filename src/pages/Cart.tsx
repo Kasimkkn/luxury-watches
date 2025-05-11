@@ -1,176 +1,155 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ShoppingCart, X, MinusCircle, PlusCircle, ShoppingBag } from "lucide-react";
+import { Trash2, Plus, Minus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Watch } from "@/types";
 
-// Sample data - in real app would come from user's cart
-const mockCart: (Watch & { quantity: number })[] = [
+// Sample data - in real app would come from a cart state/context
+const mockCartItems: (Watch & { quantity: number })[] = [
   {
     id: "1",
-    title: "Rolex Submariner",
-    brand: "rolex",
-    price: 12500,
-    originalPrice: 13500,
+    brand: "Rolex",
+    model: "Submariner",
+    price: 1250000,
+    quantity: 1,
     images: ["/placeholder.svg"],
     description: "Iconic diving watch with unidirectional rotatable bezel",
     specifications: {
-      reference: "126610LN",
-      movement: "Automatic",
       case: "Stainless Steel",
+      movement: "Automatic",
       bracelet: "Oyster",
       dial: "Black",
-      bezel: "Ceramic"
+      box: true,
+      papers: true,
+      diameter: "41mm"
     },
     inStock: true,
-    isNew: true,
-    discount: 7,
-    quantity: 1
+    condition: "New"
   }
 ];
 
 const Cart = () => {
+  const [cartItems, setCartItems] = useState(mockCartItems);
+  
+  const updateQuantity = (id: string, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    
+    setCartItems(cartItems.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+  
+  const removeItem = (id: string) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+  
   // Calculate totals
-  const subtotal = mockCart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const shipping = 0; // Free shipping
-  const tax = subtotal * 0.12; // 12% tax
-  const total = subtotal + shipping + tax;
-
+  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const tax = subtotal * 0.18; // 18% GST
+  const total = subtotal + tax;
+  
   return (
     <div className="min-h-screen flex flex-col bg-[#121212]">
       <Navbar />
       
       <main className="flex-grow">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-3xl font-bold text-white font-playfair mb-8">Shopping Cart</h1>
+          <h1 className="text-3xl font-bold text-white font-playfair mb-8">Your Cart</h1>
           
-          {mockCart.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 overflow-hidden">
-                  {/* Header */}
-                  <div className="grid grid-cols-12 gap-4 p-4 border-b border-gray-800 bg-[#242424] hidden md:grid">
-                    <div className="col-span-6">
-                      <h3 className="text-white font-medium">Product</h3>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      <h3 className="text-white font-medium">Price</h3>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      <h3 className="text-white font-medium">Quantity</h3>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      <h3 className="text-white font-medium">Total</h3>
+          {cartItems.length > 0 ? (
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Cart Items */}
+              <div className="flex-grow">
+                {cartItems.map((item) => (
+                  <div key={item.id} className="bg-[#1a1a1a] rounded-lg p-4 mb-4 border border-gray-800">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="w-full sm:w-24 h-24 bg-gray-800 rounded flex items-center justify-center">
+                        <img 
+                          src={item.images[0]} 
+                          alt={`${item.brand} ${item.model}`}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      </div>
+                      
+                      <div className="flex-grow">
+                        <h3 className="text-white font-bold text-lg font-playfair">{item.brand} {item.model}</h3>
+                        <p className="text-gray-400 text-sm">Ref: {item.reference || "N/A"}</p>
+                      </div>
+                      
+                      <div className="flex flex-row sm:flex-col justify-between items-center">
+                        <div className="flex items-center border border-gray-700 rounded">
+                          <button 
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="px-3 py-1 text-gray-400 hover:text-white"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="px-3 py-1 text-white">{item.quantity}</span>
+                          <button 
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="px-3 py-1 text-gray-400 hover:text-white"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+                        
+                        <div className="text-right">
+                          <p className="text-primary font-bold">₹{(item.price * item.quantity).toLocaleString()}</p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <button 
+                          onClick={() => removeItem(item.id)}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  
-                  {/* Cart Items */}
-                  {mockCart.map(item => (
-                    <div key={item.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border-b border-gray-800">
-                      {/* Product Info */}
-                      <div className="md:col-span-6 flex gap-4">
-                        <div className="w-20 h-20 bg-gray-800 flex items-center justify-center rounded">
-                          <img src={item.images[0]} alt={item.title} className="h-16 object-contain" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-bold font-playfair">{item.title}</h3>
-                          <p className="text-gray-400 text-sm">Ref: {item.specifications?.reference}</p>
-                          <button className="text-red-500 hover:text-red-400 transition-colors text-sm flex items-center mt-2">
-                            <X className="h-4 w-4 mr-1" /> Remove
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Price */}
-                      <div className="md:col-span-2 flex items-center justify-between md:justify-center">
-                        <span className="text-white md:hidden">Price:</span>
-                        <span className="text-white">${item.price.toLocaleString()}</span>
-                      </div>
-                      
-                      {/* Quantity */}
-                      <div className="md:col-span-2 flex items-center justify-between md:justify-center">
-                        <span className="text-white md:hidden">Quantity:</span>
-                        <div className="flex items-center">
-                          <button className="text-gray-400 hover:text-white">
-                            <MinusCircle className="h-5 w-5" />
-                          </button>
-                          <span className="mx-2 text-white w-6 text-center">{item.quantity}</span>
-                          <button className="text-gray-400 hover:text-white">
-                            <PlusCircle className="h-5 w-5" />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Total */}
-                      <div className="md:col-span-2 flex items-center justify-between md:justify-center">
-                        <span className="text-white md:hidden">Total:</span>
-                        <span className="text-primary font-bold">
-                          ${(item.price * item.quantity).toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="mt-8 flex justify-between items-center">
-                  <Link 
-                    to="/watches" 
-                    className="flex items-center text-white hover:text-primary transition-colors"
-                  >
-                    <ShoppingBag className="h-4 w-4 mr-2" />
-                    Continue Shopping
-                  </Link>
-                </div>
+                ))}
               </div>
               
               {/* Order Summary */}
-              <div>
-                <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 p-6">
-                  <h2 className="text-xl font-bold text-white font-playfair mb-6">Order Summary</h2>
+              <div className="lg:w-1/3">
+                <div className="bg-[#1a1a1a] rounded-lg p-6 border border-gray-800 sticky top-4">
+                  <h2 className="text-white text-xl font-bold mb-4 font-playfair">Order Summary</h2>
                   
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-2 mb-4">
                     <div className="flex justify-between">
                       <span className="text-gray-300">Subtotal</span>
-                      <span className="text-white">${subtotal.toLocaleString()}</span>
+                      <span className="text-white">₹{subtotal.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-300">Shipping</span>
-                      <span className="text-white">Free</span>
+                      <span className="text-gray-300">GST (18%)</span>
+                      <span className="text-white">₹{tax.toLocaleString()}</span>
                     </div>
+                    <div className="border-t border-gray-700 my-2 pt-2"></div>
                     <div className="flex justify-between">
-                      <span className="text-gray-300">Tax (12%)</span>
-                      <span className="text-white">${tax.toLocaleString()}</span>
-                    </div>
-                    <div className="border-t border-gray-800 pt-3 flex justify-between">
-                      <span className="text-white font-medium">Total</span>
-                      <span className="text-primary font-bold">${total.toLocaleString()}</span>
+                      <span className="text-white font-bold">Total</span>
+                      <span className="text-primary font-bold">₹{total.toLocaleString()}</span>
                     </div>
                   </div>
                   
-                  <button className="w-full bg-primary text-black py-3 rounded font-bold hover:bg-primary/90 transition-colors mb-4">
+                  <button className="w-full bg-primary text-black font-bold py-3 rounded hover:bg-primary/90 transition-colors">
                     Proceed to Checkout
                   </button>
-                  
-                  <div className="text-center">
-                    <p className="text-gray-400 text-sm">
-                      Secure checkout with crypto or credit card. Insured shipping and 24-month warranty.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
           ) : (
             <div className="text-center py-16">
-              <ShoppingCart className="h-16 w-16 mx-auto text-gray-600 mb-4" />
+              <div className="h-16 w-16 mx-auto text-gray-600 mb-4">🛒</div>
               <h2 className="text-2xl font-bold text-white font-playfair mb-4">Your Cart is Empty</h2>
-              <p className="text-gray-400 mb-8">Add some exceptional timepieces to your cart</p>
+              <p className="text-gray-400 mb-8">Start adding some luxury timepieces to your cart</p>
               <Link 
                 to="/watches" 
                 className="bg-primary text-black px-6 py-3 rounded font-bold hover:bg-primary/90 transition-colors"
               >
-                Shop Now
+                Discover Watches
               </Link>
             </div>
           )}

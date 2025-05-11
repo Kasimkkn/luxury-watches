@@ -10,43 +10,42 @@ import { Watch } from "@/types";
 const mockWishlist: Watch[] = [
   {
     id: "1",
-    title: "Rolex Submariner",
-    brand: "rolex",
-    price: 12500,
-    originalPrice: 13500,
+    brand: "Rolex",
+    model: "Submariner",
+    price: 1250000,
+    originalPrice: 1350000,
     images: ["/placeholder.svg"],
     description: "Iconic diving watch with unidirectional rotatable bezel",
     specifications: {
-      reference: "126610LN",
-      movement: "Automatic",
       case: "Stainless Steel",
+      movement: "Automatic",
       bracelet: "Oyster",
       dial: "Black",
-      bezel: "Ceramic"
+      box: true,
+      papers: true,
+      diameter: "41mm"
     },
     inStock: true,
-    isNew: true,
-    discount: 7
+    condition: "New"
   },
   {
     id: "2",
-    title: "Audemars Piguet Royal Oak",
-    brand: "audemars_piguet",
-    price: 32000,
-    originalPrice: 32000,
+    brand: "Audemars Piguet",
+    model: "Royal Oak",
+    price: 3200000,
     images: ["/placeholder.svg"],
     description: "Luxury sports watch with iconic octagonal bezel",
     specifications: {
-      reference: "15500ST",
-      movement: "Automatic",
       case: "Stainless Steel",
+      movement: "Automatic",
       bracelet: "Stainless Steel",
       dial: "Blue",
-      bezel: "Stainless Steel"
+      box: true,
+      papers: true,
+      diameter: "41mm"
     },
     inStock: true,
-    isNew: false,
-    discount: 0
+    condition: "Excellent"
   }
 ];
 
@@ -77,18 +76,18 @@ const Wishlist = () => {
                       <div className="h-48 bg-gray-800 flex items-center justify-center rounded mb-4">
                         <img 
                           src={watch.images[0]} 
-                          alt={watch.title} 
+                          alt={`${watch.brand} ${watch.model}`} 
                           className="max-h-full object-contain"
                         />
                       </div>
-                      <h2 className="text-xl font-bold text-white font-playfair mb-2">{watch.title}</h2>
-                      <p className="text-gray-400 mb-2">Ref: {watch.specifications?.reference}</p>
+                      <h2 className="text-xl font-bold text-white font-playfair mb-2">{watch.brand} {watch.model}</h2>
+                      <p className="text-gray-400 mb-2">Ref: {watch.reference || "N/A"}</p>
                       <div className="flex justify-between items-center">
                         <div>
-                          <p className="text-primary font-bold text-xl">${watch.price.toLocaleString()}</p>
-                          {watch.discount > 0 && (
+                          <p className="text-primary font-bold text-xl">₹{watch.price.toLocaleString()}</p>
+                          {watch.originalPrice && watch.originalPrice > watch.price && (
                             <p className="text-gray-400 text-sm line-through">
-                              ${watch.originalPrice.toLocaleString()}
+                              ₹{watch.originalPrice.toLocaleString()}
                             </p>
                           )}
                         </div>

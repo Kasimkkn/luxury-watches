@@ -29,3 +29,10 @@ export interface WatchFilters {
   condition?: ('New' | 'Excellent' | 'Good' | 'Fair')[];
   inStock?: boolean;
 }
+
+export interface Brand {
+  id: string;
+  name: string;
+  country: string;
+  founded: string;
+}
