@@ -24,7 +24,7 @@ const WatchDetail = () => {
   const navigate = useNavigate();
   const watch = watches.find((w) => w.id === id);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   if (!watch) {
     return (
       <div className="bg-[#121212] text-white">
@@ -38,19 +38,19 @@ const WatchDetail = () => {
       </div>
     );
   }
-  
+
   const nextImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === watch.images.length - 1 ? 0 : prev + 1
     );
   };
-  
+
   const prevImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === 0 ? watch.images.length - 1 : prev - 1
     );
   };
-  
+
   const addToCart = () => {
     toast({
       title: "Added to cart",
@@ -58,7 +58,7 @@ const WatchDetail = () => {
       duration: 3000,
     });
   };
-  
+
   const addToWishlist = () => {
     toast({
       title: "Added to wishlist",
@@ -66,7 +66,7 @@ const WatchDetail = () => {
       duration: 3000,
     });
   };
-  
+
   const similarWatches = watches.filter(
     (w) => w.brand === watch.brand && w.id !== watch.id
   ).slice(0, 3);
@@ -84,7 +84,7 @@ const WatchDetail = () => {
           <span>/</span>
           <span className="text-muted-foreground">{watch.model}</span>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           {/* Watch Images */}
           <div className="relative">
@@ -95,18 +95,18 @@ const WatchDetail = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            
+
             {watch.images.length > 1 && (
               <div className="flex justify-between">
-                <button 
-                  onClick={prevImage} 
+                <button
+                  onClick={prevImage}
                   className="bg-[#1e1e1e] rounded-full p-2 shadow-md hover:bg-gray-800 text-white"
                   aria-label="Previous image"
                 >
                   <ArrowLeft size={20} />
                 </button>
-                <button 
-                  onClick={nextImage} 
+                <button
+                  onClick={nextImage}
                   className="bg-[#1e1e1e] rounded-full p-2 shadow-md hover:bg-gray-800 text-white"
                   aria-label="Next image"
                 >
@@ -114,20 +114,19 @@ const WatchDetail = () => {
                 </button>
               </div>
             )}
-            
+
             {watch.images.length > 1 && (
               <div className="flex gap-2 mt-4">
                 {watch.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-16 h-16 border-2 rounded-md overflow-hidden ${
-                      currentImageIndex === index ? 'border-primary' : 'border-gray-700'
-                    }`}
+                    className={`w-16 h-16 border-2 rounded-md overflow-hidden ${currentImageIndex === index ? 'border-primary' : 'border-gray-700'
+                      }`}
                   >
-                    <img 
-                      src={image} 
-                      alt={`${watch.brand} ${watch.model} thumbnail`} 
+                    <img
+                      src={image}
+                      alt={`${watch.brand} ${watch.model} thumbnail`}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -135,14 +134,14 @@ const WatchDetail = () => {
               </div>
             )}
           </div>
-          
+
           {/* Watch Details */}
           <div>
             <div className="mb-4">
               <h1 className="text-3xl font-bold mb-1 font-playfair">{watch.brand} {watch.model}</h1>
               <p className="text-muted-foreground">Reference: {watch.reference}</p>
             </div>
-            
+
             <div className="mb-6">
               <div className="flex items-center gap-4">
                 <span className="text-3xl font-bold">{formatPrice(watch.price)}</span>
@@ -161,14 +160,14 @@ const WatchDetail = () => {
                 <div className="text-red-500 mt-2">Out of Stock</div>
               )}
             </div>
-            
+
             <Separator className="my-6 bg-gray-700" />
-            
+
             <div className="mb-6">
               <h2 className="font-semibold mb-3 font-playfair">Description</h2>
               <p className="text-gray-300">{watch.description}</p>
             </div>
-            
+
             <div className="mb-6">
               <h2 className="font-semibold mb-3 font-playfair">Key Details</h2>
               <div className="grid grid-cols-2 gap-4">
@@ -196,10 +195,10 @@ const WatchDetail = () => {
                 </div>
               </div>
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <Button 
-                className="flex-1 bg-white text-black hover:bg-gray-200"
+
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6">
+              <Button
+                className="flex-1 bg-white max-md:p-3 text-black hover:bg-gray-200"
                 size="lg"
                 disabled={!watch.inStock}
                 onClick={addToCart}
@@ -207,10 +206,10 @@ const WatchDetail = () => {
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 Add to Cart
               </Button>
-              
-              <Button 
+
+              <Button
                 variant="outline"
-                className="flex-1 border-white text-white hover:bg-gray-800"
+                className="flex-1 border-white max-md:p-3 text-white hover:bg-gray-800"
                 size="lg"
                 onClick={addToWishlist}
               >
@@ -218,9 +217,9 @@ const WatchDetail = () => {
                 Add to Wishlist
               </Button>
             </div>
-            
+
             <Separator className="my-6 bg-gray-700" />
-            
+
             <div className="mb-6">
               <h2 className="font-semibold mb-3 font-playfair">Share</h2>
               <div className="flex gap-2">
@@ -231,7 +230,7 @@ const WatchDetail = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Accordion Section */}
         <div className="mb-16">
           <Accordion type="single" collapsible className="w-full">
@@ -330,15 +329,15 @@ const WatchDetail = () => {
             </AccordionItem>
           </Accordion>
         </div>
-        
+
         {/* Similar Watches */}
         {similarWatches.length > 0 && (
           <div>
             <h2 className="text-2xl font-bold mb-8 font-playfair">Similar Watches</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {similarWatches.map((similarWatch) => (
-                <WatchCard 
-                  key={similarWatch.id} 
+                <WatchCard
+                  key={similarWatch.id}
                   watch={similarWatch}
                   onClick={() => navigate(`/watches/${similarWatch.id}`)}
                 />

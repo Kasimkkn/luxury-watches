@@ -1,22 +1,20 @@
 
-import React from "react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { 
-  Upload, 
-  Camera, 
-  CheckCircle2, 
-  MessageCircle, 
-  Phone, 
-  BarChart4
+import Navbar from "@/components/Navbar";
+import {
+  BarChart4,
+  Camera,
+  CheckCircle2,
+  MessageCircle,
+  Phone,
+  Upload
 } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const SellYourWatch = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#121212]">
       <Navbar />
-      
+
       <main className="flex-grow">
         <div className="container mx-auto px-4">
           {/* Hero section */}
@@ -29,14 +27,14 @@ const SellYourWatch = () => {
               Our experts will authenticate and evaluate your watch to ensure you receive a fair price.
             </p>
           </div>
-          
+
           {/* Selling Process */}
           <div className="py-12 bg-[#1a1a1a] rounded-xl mb-12">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-white font-playfair mb-8 text-center">
                 Our Selling Process
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 {/* Upload Watch Details */}
                 <div className="bg-[#242424] p-8 rounded-lg border border-gray-800">
@@ -47,7 +45,7 @@ const SellYourWatch = () => {
                     </h3>
                   </div>
                   <p className="text-gray-300">
-                    Fill out our detailed form with your watch information and upload high-quality images. 
+                    Fill out our detailed form with your watch information and upload high-quality images.
                     The more information you provide, the more accurate our initial quote will be.
                   </p>
                   <div className="mt-6 flex gap-2 flex-wrap">
@@ -58,7 +56,7 @@ const SellYourWatch = () => {
                     <div className="bg-[#333] text-white text-sm px-3 py-1 rounded">Condition</div>
                   </div>
                 </div>
-                
+
                 {/* Authentication */}
                 <div className="bg-[#242424] p-8 rounded-lg border border-gray-800">
                   <div className="flex items-center mb-4">
@@ -81,7 +79,7 @@ const SellYourWatch = () => {
                     <p className="text-xs text-gray-400">Authentication Rate</p>
                   </div>
                 </div>
-                
+
                 {/* Communication */}
                 <div className="bg-[#242424] p-8 rounded-lg border border-gray-800">
                   <div className="flex items-center mb-4">
@@ -91,7 +89,7 @@ const SellYourWatch = () => {
                     </h3>
                   </div>
                   <p className="text-gray-300">
-                    We maintain open communication throughout the process. Once we've evaluated your watch, 
+                    We maintain open communication throughout the process. Once we've evaluated your watch,
                     we'll provide you with a competitive offer based on current market conditions.
                   </p>
                   <div className="mt-6 flex gap-3">
@@ -105,7 +103,7 @@ const SellYourWatch = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Price Comparison */}
                 <div className="bg-[#242424] p-8 rounded-lg border border-gray-800">
                   <div className="flex items-center mb-4">
@@ -130,13 +128,13 @@ const SellYourWatch = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Upload Form */}
-              <div className="bg-[#1e1e1e] p-8 rounded-lg border border-gray-800 max-w-3xl mx-auto">
+              <div className="bg-[#1e1e1e] p-3 md:p-8 rounded-lg border border-gray-800 max-w-3xl mx-auto">
                 <h3 className="text-2xl font-bold text-white font-playfair mb-6 text-center">
                   Submit Your Watch Details
                 </h3>
-                
+
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -150,34 +148,34 @@ const SellYourWatch = () => {
                         <option value="cartier">Cartier</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label className="block text-white mb-2">Model</label>
-                      <input 
-                        type="text" 
-                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md" 
+                      <input
+                        type="text"
+                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md"
                         placeholder="e.g. Submariner, Speedmaster"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-white mb-2">Reference Number</label>
-                      <input 
-                        type="text" 
-                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md" 
+                      <input
+                        type="text"
+                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md"
                         placeholder="e.g. 116610LN"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-white mb-2">Year</label>
-                      <input 
-                        type="number" 
-                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md" 
+                      <input
+                        type="number"
+                        className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md"
                         placeholder="e.g. 2018"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-white mb-2">Condition</label>
                       <select className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md">
@@ -189,7 +187,7 @@ const SellYourWatch = () => {
                         <option value="fair">Fair</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label className="block text-white mb-2">Box & Papers</label>
                       <select className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md">
@@ -201,15 +199,15 @@ const SellYourWatch = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-white mb-2">Description</label>
-                    <textarea 
-                      className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md h-32" 
+                    <textarea
+                      className="w-full bg-[#333] border border-gray-700 text-white py-2 px-3 rounded-md h-32"
                       placeholder="Provide any additional details about your watch..."
                     ></textarea>
                   </div>
-                  
+
                   <div>
                     <label className="block text-white mb-2">Upload Images</label>
                     <div className="border-2 border-dashed border-gray-700 rounded-md p-6 text-center">
@@ -222,10 +220,10 @@ const SellYourWatch = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="text-center">
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       className="px-8 py-3 bg-primary text-black font-bold rounded-md hover:bg-primary/90 transition-colors"
                     >
                       Submit Your Watch
@@ -237,7 +235,7 @@ const SellYourWatch = () => {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

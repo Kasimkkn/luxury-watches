@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#121212]">
       <Navbar />
-      
+
       <main className="flex-grow">
         <div className="container mx-auto px-4 py-12">
           {/* Hero Section */}
@@ -17,7 +17,7 @@ const AboutUs = () => {
               Dedicated to curating exceptional timepieces for discerning collectors and enthusiasts since 2010.
             </p>
           </div>
-          
+
           {/* Our Story */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
             <div>
@@ -62,19 +62,21 @@ const AboutUs = () => {
               </ul>
             </div>
           </div>
-          
+
           {/* Team */}
           <div className="mb-20">
             <h2 className="text-3xl font-bold mb-10 text-white font-playfair text-center">Our Experts</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { name: "Rajiv Mehta", role: "Founder & CEO", expertise: "Vintage Rolex Specialist" },
-                { name: "Priya Singh", role: "Head of Authentication", expertise: "Patek Philippe Expert" },
-                { name: "Vikram Kapoor", role: "Chief Watchmaker", expertise: "WOSTEP Certified" },
-                { name: "Aisha Patel", role: "Client Relations", expertise: "Fine Jewelry Specialist" }
+                { name: "Rajiv Mehta", role: "Founder & CEO", expertise: "Vintage Rolex Specialist", image: "https://i.pinimg.com/736x/3c/b5/00/3cb5006d920ab3293da41860dcef7bd4.jpg" },
+                { name: "Priya Singh", role: "Head of Authentication", expertise: "Patek Philippe Expert", image: "https://www.shutterstock.com/image-photo/portrait-young-beautiful-woman-perfect-600nw-2228044151.jpg" },
+                { name: "Vikram Kapoor", role: "Chief Watchmaker", expertise: "WOSTEP Certified", image: "https://img.freepik.com/free-photo/close-up-portrait-attractive-male-model-young-handsome-man-bar_158595-5134.jpg?semt=ais_hybrid&w=740" },
+                { name: "Aisha Patel", role: "Client Relations", expertise: "Fine Jewelry Specialist", image: "https://www.shutterstock.com/image-photo/cheerful-brunette-business-woman-student-600nw-2246174263.jpg" },
               ].map((member, index) => (
                 <div key={index} className="bg-[#1a1a1a] p-6 rounded-lg border border-gray-800 text-center">
-                  <div className="w-32 h-32 bg-gray-700 rounded-full mx-auto mb-4"></div>
+                  <div className="w-32 h-32 bg-gray-700 rounded-full mx-auto mb-4">
+                    <img src={member.image} className="w-full h-full rounded-full object-cover" alt="" />
+                  </div>
                   <h3 className="text-xl font-bold text-white font-playfair mb-1">{member.name}</h3>
                   <p className="text-primary mb-2">{member.role}</p>
                   <p className="text-gray-400 text-sm">{member.expertise}</p>
@@ -82,7 +84,7 @@ const AboutUs = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Contact */}
           <div className="bg-[#1a1a1a] p-8 rounded-lg border border-gray-800 max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-white font-playfair text-center">Visit Our Boutique</h2>
@@ -92,26 +94,26 @@ const AboutUs = () => {
                 <p className="text-gray-300 mb-2">123 Luxury Lane, Bandra West</p>
                 <p className="text-gray-300 mb-2">Mumbai, Maharashtra 400050</p>
                 <p className="text-gray-300 mb-6">India</p>
-                
+
                 <p className="text-gray-300 mb-2">
                   <span className="font-semibold text-white">Hours:</span> Monday-Saturday, 10am-7pm
                 </p>
                 <p className="text-gray-300 mb-6">
                   <span className="font-semibold text-white">Phone:</span> +91 98765 43210
                 </p>
-                
+
                 <button className="bg-primary text-black px-6 py-3 rounded-md font-bold hover:bg-primary/90 transition-colors">
                   Book an Appointment
                 </button>
               </div>
               <div className="bg-gray-700 rounded-lg min-h-[200px] flex items-center justify-center">
-                <p className="text-white">Map placeholder</p>
+                <img src="https://www.tofler.in/images/india_map" className="w-full h-full object-cover" alt="" />
               </div>
             </div>
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

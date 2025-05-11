@@ -1,20 +1,19 @@
-
 import React, { ReactNode } from "react";
 import { FileText, ShieldCheck, HelpCircle } from "lucide-react";
-import { 
-  Drawer, 
-  DrawerTrigger, 
-  DrawerContent, 
-  DrawerHeader, 
-  DrawerTitle, 
-  DrawerFooter, 
-  DrawerClose 
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerFooter,
+  DrawerClose
 } from "@/components/ui/drawer";
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
@@ -31,7 +30,7 @@ const LegalDrawer = ({ children, title, icon, content }: LegalDrawerProps) => {
       <DrawerTrigger asChild>
         {children}
       </DrawerTrigger>
-      <DrawerContent className="bg-[#121212] text-white border-t border-gray-800">
+      <DrawerContent className="bg-[#121212] text-white border-t border-gray-800 max-h-[70vh]">
         <div className="max-w-4xl mx-auto w-full">
           <DrawerHeader className="text-left">
             <div className="flex items-center">
@@ -39,11 +38,11 @@ const LegalDrawer = ({ children, title, icon, content }: LegalDrawerProps) => {
               <DrawerTitle className="text-xl font-playfair">{title}</DrawerTitle>
             </div>
           </DrawerHeader>
-          
-          <div className="px-4 pb-4">
+
+          <div className="px-4 pb-4 overflow-y-auto max-h-[calc(70vh-140px)]">
             {content}
           </div>
-          
+
           <DrawerFooter>
             <DrawerClose asChild>
               <Button variant="outline" className="border-gray-700 hover:bg-[#2a2a2a] hover:text-white">
@@ -60,21 +59,21 @@ const LegalDrawer = ({ children, title, icon, content }: LegalDrawerProps) => {
 // Terms & Conditions Drawer
 export const TermsConditionsDrawer = ({ children }: { children: ReactNode }) => {
   return (
-    <LegalDrawer 
-      title="Terms & Conditions" 
+    <LegalDrawer
+      title="Terms & Conditions"
       icon={<FileText className="h-5 w-5" />}
       content={
         <div className="space-y-4 text-gray-300">
           <p>Last updated: May 11, 2023</p>
-          
+
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">1. Introduction</h3>
             <p>
-              Welcome to Luxury Watches. These Terms and Conditions govern your access to and use of 
-              our website, mobile application, and services. By accessing or using our services, 
-              you agree to be bound by these Terms and Conditions and our Privacy Policy. 
+              Welcome to Luxury Watches. These Terms and Conditions govern your access to and use of
+              our website, mobile application, and services. By accessing or using our services,
+              you agree to be bound by these Terms and Conditions and our Privacy Policy.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">2. Definitions</h3>
             <p>
               "Website" refers to Luxury Watches accessible via www.luxurywatches.com
@@ -85,7 +84,7 @@ export const TermsConditionsDrawer = ({ children }: { children: ReactNode }) => 
               <br />
               "Product" refers to watches and accessories sold through our Services.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">3. Products and Authentication</h3>
             <p>
               All watches sold through our platform undergo rigorous authentication by certified experts.
@@ -94,7 +93,7 @@ export const TermsConditionsDrawer = ({ children }: { children: ReactNode }) => 
               We provide detailed information about each product, including condition, specifications,
               and provenance where applicable. Any visible flaws or imperfections will be noted in the product description.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">4. Orders and Payments</h3>
             <p>
               By placing an order, you agree to provide current, complete, and accurate purchase information.
@@ -110,7 +109,7 @@ export const TermsConditionsDrawer = ({ children }: { children: ReactNode }) => 
               <br /><br />
               International customers are responsible for any customs duties, taxes, or import fees.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">6. Returns and Refunds</h3>
             <p>
               We offer a 14-day return policy for unworn and undamaged items.
@@ -130,24 +129,24 @@ export const TermsConditionsDrawer = ({ children }: { children: ReactNode }) => 
 // Privacy Policy Drawer
 export const PrivacyPolicyDrawer = ({ children }: { children: ReactNode }) => {
   return (
-    <LegalDrawer 
-      title="Privacy Policy" 
+    <LegalDrawer
+      title="Privacy Policy"
       icon={<ShieldCheck className="h-5 w-5" />}
       content={
         <div className="space-y-4 text-gray-300">
           <p>Last updated: May 11, 2023</p>
-          
+
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">1. Introduction</h3>
             <p>
-              Luxury Watches ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy 
-              explains how we collect, use, disclose, and safeguard your information when you visit our website 
+              Luxury Watches ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy
+              explains how we collect, use, disclose, and safeguard your information when you visit our website
               or use our services.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">2. Information We Collect</h3>
             <p>
-              <strong className="text-white">Personal Data:</strong> We collect personal information that you voluntarily provide to us when registering, 
+              <strong className="text-white">Personal Data:</strong> We collect personal information that you voluntarily provide to us when registering,
               expressing interest in our products or services, or otherwise contacting us. This includes:
             </p>
             <ul className="list-disc pl-5 space-y-1">
@@ -156,7 +155,7 @@ export const PrivacyPolicyDrawer = ({ children }: { children: ReactNode }) => {
               <li>Purchase history and preferences</li>
               <li>Communications with our customer service team</li>
             </ul>
-            
+
             <h3 className="text-lg font-semibold text-white">3. How We Use Your Information</h3>
             <p>We may use your information to:</p>
             <ul className="list-disc pl-5 space-y-1">
@@ -167,23 +166,23 @@ export const PrivacyPolicyDrawer = ({ children }: { children: ReactNode }) => {
               <li>Send promotional emails about new products or special offers</li>
               <li>Protect against fraudulent transactions and unauthorized access</li>
             </ul>
-            
+
             <h3 className="text-lg font-semibold text-white">4. Data Security</h3>
             <p>
-              We implement appropriate security measures to protect your personal data against unauthorized 
-              access, alteration, disclosure, or destruction. However, no method of transmission over the 
+              We implement appropriate security measures to protect your personal data against unauthorized
+              access, alteration, disclosure, or destruction. However, no method of transmission over the
               internet or electronic storage is 100% secure.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">5. Third-Party Disclosure</h3>
             <p>
-              We do not sell or rent your personal information to third parties. We may share your information with 
+              We do not sell or rent your personal information to third parties. We may share your information with
               trusted service providers who assist us in operating our website, conducting our business, or servicing you.
             </p>
-            
+
             <h3 className="text-lg font-semibold text-white">6. Your Rights</h3>
             <p>
-              You have the right to access, correct, or delete your personal data. You may also object to 
+              You have the right to access, correct, or delete your personal data. You may also object to
               or restrict certain processing of your data or request portability of your data.
               <br /><br />
               To exercise these rights, please contact us using the information provided below.
@@ -233,10 +232,10 @@ export const FAQDrawer = ({ children }: { children: ReactNode }) => {
       answer: "Our prices reflect the fair market value of each timepiece. While we generally maintain our listed prices, we occasionally offer promotions or special discounts to our newsletter subscribers."
     }
   ];
-  
+
   return (
-    <LegalDrawer 
-      title="Frequently Asked Questions" 
+    <LegalDrawer
+      title="Frequently Asked Questions"
       icon={<HelpCircle className="h-5 w-5" />}
       content={
         <div className="text-gray-300">
