@@ -13,7 +13,7 @@ const Hero = () => {
               Discover our curated collection of luxury watches from the world's most prestigious brands.
             </p>
             <div className="flex flex-wrap gap-4">
-              <button onClick={() => navigate("/watches")} className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md font-medium">
+              <button onClick={() => navigate("/watches")} className="bg-primary hover:bg-primary/90 px-6 py-3 rounded-md font-medium text-gray-950">
                 Explore Collection
               </button>
               <button onClick={() => navigate("/sell")} className="bg-transparent hover:bg-white/10 border border-white text-white px-6 py-3 rounded-md font-medium">
