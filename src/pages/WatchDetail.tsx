@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { watches } from "@/data/watches";
@@ -10,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
 import FeaturedWatches from "@/components/FeaturedWatches";
+import WatchCard from "@/components/WatchCard";
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-IN", {

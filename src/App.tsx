@@ -9,6 +9,26 @@ import Watches from "./pages/Watches";
 import WatchDetail from "./pages/WatchDetail";
 import NotFound from "./pages/NotFound";
 
+// Add font links
+const fontLinks = (
+  <>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </>
+);
+
+// Add the font links to the document head
+document.head.appendChild(
+  Object.assign(document.createElement("fragment"), {
+    innerHTML: fontLinks.props.children.map((link: React.ReactElement) => 
+      link.type === "link" ? 
+      `<link rel="${link.props.rel}" href="${link.props.href}" ${link.props.crossOrigin ? `crossorigin="${link.props.crossOrigin}"` : ""} />` : 
+      ""
+    ).join("")
+  })
+);
+
 const queryClient = new QueryClient();
 
 const App = () => (

@@ -11,7 +11,7 @@ import Testimonials from "@/components/Testimonials";
 
 const Index = () => {
   return (
-    <div>
+    <div className="bg-[#121212] text-white min-h-screen">
       <Navbar />
       <main>
         <Hero />
