@@ -21,7 +21,9 @@ const FeaturedBrands = () => {
               className="bg-[#1a1a1a] rounded-lg p-6 flex flex-col items-center justify-center border border-gray-800 hover:border-primary cursor-pointer transition-all hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mb-3">
-                <span className="text-primary text-xl font-bold">{brand.name.charAt(0)}</span>
+                <span className="text-primary text-xl font-bold">
+                  {brand.name && brand.name.charAt(0)}
+                </span>
               </div>
               <h3 className="text-white font-bold text-center font-playfair">{brand.name}</h3>
             </div>

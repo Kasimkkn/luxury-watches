@@ -2,10 +2,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Search, User, Heart, Menu, ShoppingCart } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
-  return <header className="bg-[#121212] border-b border-gray-800 sticky top-0 z-50">
+  const { user, isAuthenticated, logout } = useAuth();
+  
+  return (
+    <header className="bg-[#121212] border-b border-gray-800 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center">
@@ -64,12 +69,63 @@ const Navbar = () => {
             <Link to="/cart" aria-label="Cart" className="text-white hover:text-primary transition-colors">
               <ShoppingCart size={20} />
             </Link>
-            <Link to="/profile" aria-label="Account" className="text-white hover:text-primary transition-colors">
-              <User size={20} />
-            </Link>
+            
+            {isAuthenticated && user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary text-white">
+                      {user.firstName.charAt(0) + user.lastName.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-[#121212] border border-gray-800">
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/profile">My Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/orders">My Orders</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/wishlist">My Wishlist</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/change-password">Change Password</Link>
+                  </DropdownMenuItem>
+                  {user.role === "admin" && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                        <Link to="/admin">Admin Dashboard</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout} className="text-white hover:bg-gray-800">
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <User size={20} className="text-white hover:text-primary transition-colors" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-[#121212] border border-gray-800">
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/login">Sign In</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/signup">Create Account</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
       </div>
-    </header>;
+    </header>
+  );
 };
+
 export default Navbar;
