@@ -1,12 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from "react";
+import { watches } from "@/data/watches";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import FeaturedWatches from "@/components/FeaturedWatches";
+import BenefitsSection from "@/components/BenefitsSection";
+import FeaturedBrands from "@/components/FeaturedBrands";
+import Testimonials from "@/components/Testimonials";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div>
+      <Navbar />
+      <main>
+        <Hero />
+        <FeaturedWatches watches={watches} />
+        <BenefitsSection />
+        <FeaturedBrands />
+        <Testimonials />
+      </main>
+      <Footer />
     </div>
   );
 };
