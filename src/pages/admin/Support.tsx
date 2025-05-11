@@ -1,12 +1,8 @@
 
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, MessageSquare, Phone, Calendar, Clock, Filter } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CustomerInquiry, ChatMessage } from "@/types/admin";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
@@ -15,6 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChatMessage, CustomerInquiry } from "@/types/admin";
+import { Calendar, Clock, MessageSquare, Phone, Search } from "lucide-react";
+import React, { useState } from "react";
 
 // Mock customer inquiries
 const mockInquiries: CustomerInquiry[] = [
@@ -125,12 +125,12 @@ const Support = () => {
 
   // Filter inquiries based on search term and status
   const filteredInquiries = mockInquiries.filter((inquiry) => {
-    const matchesSearch = 
+    const matchesSearch =
       inquiry.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.subject.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesStatus = statusFilter ? inquiry.status === statusFilter : true;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -213,7 +213,7 @@ const Support = () => {
               </TabsTrigger>
             </TabsList>
           </div>
-          
+
           <TabsContent value="chat" className="flex-1 overflow-hidden p-0 flex h-full">
             <div className="w-1/3 border-r border-gray-800 h-full flex flex-col">
               <div className="p-4 border-b border-gray-800 space-y-4">
@@ -241,14 +241,13 @@ const Support = () => {
                   </Select>
                 </div>
               </div>
-              
+
               <ScrollArea className="flex-1">
                 {filteredInquiries.map((inquiry) => (
                   <div
                     key={inquiry.id}
-                    className={`p-4 border-b border-gray-800 cursor-pointer transition-colors ${
-                      selectedInquiry?.id === inquiry.id ? "bg-gray-800" : "hover:bg-gray-800/50"
-                    }`}
+                    className={`p-4 border-b border-gray-800 cursor-pointer transition-colors ${selectedInquiry?.id === inquiry.id ? "bg-gray-800" : "hover:bg-gray-800/50"
+                      }`}
                     onClick={() => selectInquiry(inquiry)}
                   >
                     <div className="flex justify-between">
@@ -282,7 +281,7 @@ const Support = () => {
                 ))}
               </ScrollArea>
             </div>
-            
+
             <div className="w-2/3 flex flex-col h-full">
               {selectedInquiry ? (
                 <>
@@ -324,22 +323,20 @@ const Support = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <ScrollArea className="flex-1 p-4">
                     <div className="space-y-4">
                       {messages.map((message) => (
                         <div
                           key={message.id}
-                          className={`flex ${
-                            message.sender === "admin" ? "justify-end" : "justify-start"
-                          }`}
+                          className={`flex ${message.sender === "admin" ? "justify-end" : "justify-start"
+                            }`}
                         >
                           <div
-                            className={`max-w-[70%] rounded-lg p-3 ${
-                              message.sender === "admin"
+                            className={`max-w-[70%] rounded-lg p-3 ${message.sender === "admin"
                                 ? "bg-primary text-white"
                                 : "bg-[#2a2a2a] text-white"
-                            }`}
+                              }`}
                           >
                             <div className="text-sm">{message.message}</div>
                             <div className="text-xs mt-1 opacity-70">
@@ -350,7 +347,7 @@ const Support = () => {
                       ))}
                     </div>
                   </ScrollArea>
-                  
+
                   <div className="p-4 border-t border-gray-800">
                     <form onSubmit={handleSendMessage} className="flex space-x-2">
                       <Input
@@ -376,7 +373,7 @@ const Support = () => {
               )}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="calls" className="flex-1">
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -386,7 +383,7 @@ const Support = () => {
               </div>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="scheduled" className="flex-1">
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -396,7 +393,7 @@ const Support = () => {
               </div>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="history" className="flex-1">
             <div className="flex items-center justify-center h-full">
               <div className="text-center">

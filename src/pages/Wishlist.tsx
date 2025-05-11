@@ -14,7 +14,7 @@ const mockWishlist: Watch[] = [
     model: "Submariner",
     price: 1250000,
     originalPrice: 1350000,
-    images: ["/placeholder.svg"],
+    images: ["https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1080"],
     description: "Iconic diving watch with unidirectional rotatable bezel",
     specifications: {
       case: "Stainless Steel",
@@ -33,7 +33,7 @@ const mockWishlist: Watch[] = [
     brand: "Audemars Piguet",
     model: "Royal Oak",
     price: 3200000,
-    images: ["/placeholder.svg"],
+    images: ["https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1080"],
     description: "Luxury sports watch with iconic octagonal bezel",
     specifications: {
       case: "Stainless Steel",
@@ -53,7 +53,7 @@ const Wishlist = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#121212]">
       <Navbar />
-      
+
       <main className="flex-grow">
         <div className="container mx-auto px-4 py-12">
           <div className="flex items-center justify-between mb-8">
@@ -62,7 +62,7 @@ const Wishlist = () => {
               {mockWishlist.length} Items
             </span>
           </div>
-          
+
           {mockWishlist.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {mockWishlist.map((watch) => (
@@ -70,13 +70,13 @@ const Wishlist = () => {
                   <button className="absolute top-4 right-4 text-red-500 hover:text-red-400 transition-colors">
                     <Heart className="h-6 w-6 fill-current" />
                   </button>
-                  
+
                   <Link to={`/watches/${watch.id}`}>
                     <div className="p-4">
-                      <div className="h-48 bg-gray-800 flex items-center justify-center rounded mb-4">
-                        <img 
-                          src={watch.images[0]} 
-                          alt={`${watch.brand} ${watch.model}`} 
+                      <div className="h-56 flex items-center justify-center rounded mb-4">
+                        <img
+                          src={watch.images[0]}
+                          alt={`${watch.brand} ${watch.model}`}
                           className="max-h-full object-contain"
                         />
                       </div>
@@ -99,7 +99,7 @@ const Wishlist = () => {
                       </div>
                     </div>
                   </Link>
-                  
+
                   <div className="border-t border-gray-800 p-4">
                     <button className="w-full bg-primary text-black py-2 rounded font-bold hover:bg-primary/90 transition-colors">
                       Add to Cart
@@ -113,8 +113,8 @@ const Wishlist = () => {
               <Heart className="h-16 w-16 mx-auto text-gray-600 mb-4" />
               <h2 className="text-2xl font-bold text-white font-playfair mb-4">Your Wishlist is Empty</h2>
               <p className="text-gray-400 mb-8">Browse our collection and heart your favorite pieces</p>
-              <Link 
-                to="/watches" 
+              <Link
+                to="/watches"
                 className="bg-primary text-black px-6 py-3 rounded font-bold hover:bg-primary/90 transition-colors"
               >
                 Discover Watches
@@ -123,7 +123,7 @@ const Wishlist = () => {
           )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

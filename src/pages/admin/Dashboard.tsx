@@ -1,25 +1,20 @@
 
-import React from "react";
-import { Link } from "react-router-dom";
-import {
-  ShoppingCart,
-  Users,
-  Clock,
-  DollarSign,
-  TrendingUp,
-  Tag,
-  BarChart,
-  ArrowRight,
-} from "lucide-react";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
-import { AreaChart, Area, BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  ArrowRight,
+  DollarSign,
+  ShoppingCart,
+  TrendingUp,
+  Users
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { Area, AreaChart, Bar, CartesianGrid, BarChart as RechartsBarChart, Tooltip, XAxis, YAxis } from "recharts";
 
 // Mock data for charts
 const salesData = [
@@ -164,8 +159,8 @@ const AdminDashboard = () => {
                   <XAxis dataKey="name" stroke="#6b7280" />
                   <YAxis stroke="#6b7280" />
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: '#1a1a1a',
                       border: '1px solid #374151',
                       color: '#fff'
@@ -183,7 +178,7 @@ const AdminDashboard = () => {
             </div>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-[#1a1a1a] border-gray-800">
           <CardHeader>
             <CardTitle className="text-lg font-bold text-white">Top Selling Products</CardTitle>
@@ -201,8 +196,8 @@ const AdminDashboard = () => {
                 <RechartsBarChart data={productData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                   <XAxis dataKey="name" stroke="#6b7280" />
                   <YAxis stroke="#6b7280" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: '#1a1a1a',
                       border: '1px solid #374151',
                       color: '#fff'
@@ -245,9 +240,8 @@ const AdminDashboard = () => {
                     <td className="py-3 px-4 text-sm text-gray-400">{order.date}</td>
                     <td className="py-3 px-4 text-sm text-white">${order.amount.toLocaleString()}</td>
                     <td className="py-3 px-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs ${getStatusColor(order.status)} bg-opacity-20 text-${
-                        order.status === "Completed" ? "green" : order.status === "Processing" ? "blue" : "amber"
-                      }-500`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs ${getStatusColor(order.status)} bg-opacity-20 text-${order.status === "Completed" ? "green" : order.status === "Processing" ? "blue" : "amber"
+                        }-500`}>
                         {order.status}
                       </span>
                     </td>

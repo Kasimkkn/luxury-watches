@@ -4,11 +4,10 @@ import { User, AuthState } from "@/types/auth";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-// Mock user data including an admin user
 const mockUsers = [
   {
     id: "1",
-    email: "admin@luxurywatches.com",
+    email: "admin@gmail.com",
     phone: "+1234567890",
     firstName: "Admin",
     lastName: "User",
@@ -173,12 +172,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // Store pending signup for OTP verification
       setPendingSignUp(data);
-      
+
       toast({
         title: "OTP sent",
         description: "Please check your email/phone for the verification code"
       });
-      
+
       // Navigate to OTP page
       navigate("/verify-otp");
       return true;
@@ -222,12 +221,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           });
 
           setPendingSignUp(null);
-          
+
           toast({
             title: "Account created",
             description: "Your account has been created successfully"
           });
-          
+
           navigate("/profile");
           return true;
         } else if (pendingReset) {
@@ -236,12 +235,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             title: "OTP verified",
             description: "Please set your new password"
           });
-          
+
           navigate("/set-password");
           return true;
         }
       }
-      
+
       toast({
         title: "Verification failed",
         description: "Invalid verification code",
@@ -278,12 +277,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setPendingReset(emailOrPhone);
-      
+
       toast({
         title: "OTP sent",
         description: "Please check your email/phone for the verification code"
       });
-      
+
       navigate("/verify-otp");
       return true;
     } catch (error) {
@@ -303,7 +302,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // In a real app, we would verify the old password and set the new one
       // For the demo, we'll just simulate success
-      
+
       toast({
         title: "Password changed",
         description: "Your password has been updated successfully"

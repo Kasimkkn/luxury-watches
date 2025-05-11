@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
-  
+
   return (
     <header className="bg-[#121212] border-b border-gray-800 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -17,11 +17,11 @@ const Navbar = () => {
             <button className="mr-4 lg:hidden text-white">
               <Menu size={24} />
             </button>
-            <Link to="/" className="text-2xl font-bold text-white font-playfair">
+            <Link to="/" className="md:text-2xl font-bold text-white font-playfair">
               LUXURY WATCHES
             </Link>
           </div>
-          
+
           <nav className="hidden lg:flex items-center space-x-8">
             <Link to="/watches" className="font-medium text-white hover:text-primary transition-colors">
               All Watches
@@ -58,24 +58,18 @@ const Navbar = () => {
               About Us
             </Link>
           </nav>
-          
+
           <div className="flex items-center space-x-4">
-            <button aria-label="Search" className="text-white hover:text-primary transition-colors">
-              <Search size={20} />
-            </button>
-            <Link to="/wishlist" aria-label="Wishlist" className="text-white hover:text-primary transition-colors">
-              <Heart size={20} />
-            </Link>
             <Link to="/cart" aria-label="Cart" className="text-white hover:text-primary transition-colors">
               <ShoppingCart size={20} />
             </Link>
-            
+
             {isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-white">
-                      {user.firstName.charAt(0) + user.lastName.charAt(0)}
+                      {user?.firstName?.charAt(0) + user?.lastName?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>

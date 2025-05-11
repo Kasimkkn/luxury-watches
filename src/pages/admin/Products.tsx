@@ -1,35 +1,15 @@
 
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Search, Plus, Edit, Trash, Filter } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { watches } from "@/data/watches";
-import { Watch } from "@/types";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -39,6 +19,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { watches } from "@/data/watches";
+import { useToast } from "@/hooks/use-toast";
+import { Watch } from "@/types";
+import { Edit, Filter, Plus, Search, Trash } from "lucide-react";
+import { useState } from "react";
 
 const Products = () => {
   const { toast } = useToast();
@@ -159,7 +152,7 @@ const Products = () => {
             <TableHeader>
               <TableRow className="hover:bg-[#222]">
                 <TableHead className="w-[50px]">
-                  <Checkbox 
+                  <Checkbox
                     checked={currentProducts.length > 0 && selectedProducts.length === currentProducts.length}
                     onCheckedChange={handleSelectAllProducts}
                   />
@@ -176,7 +169,7 @@ const Products = () => {
               {currentProducts.map((product) => (
                 <TableRow key={product.id} className="hover:bg-[#222]">
                   <TableCell>
-                    <Checkbox 
+                    <Checkbox
                       checked={selectedProducts.includes(product.id)}
                       onCheckedChange={() => handleSelectProduct(product.id)}
                     />
@@ -244,12 +237,12 @@ const Products = () => {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious 
+                <PaginationPrevious
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
                 />
               </PaginationItem>
-              
+
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 let pageNum;
                 if (totalPages <= 5) {
@@ -261,7 +254,7 @@ const Products = () => {
                 } else {
                   pageNum = currentPage - 2 + i;
                 }
-                
+
                 return (
                   <PaginationItem key={i}>
                     <PaginationLink
@@ -273,15 +266,15 @@ const Products = () => {
                   </PaginationItem>
                 );
               })}
-              
+
               {totalPages > 5 && currentPage < totalPages - 2 && (
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
               )}
-              
+
               <PaginationItem>
-                <PaginationNext 
+                <PaginationNext
                   onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                   className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
                 />
@@ -302,8 +295,7 @@ const Products = () => {
               Are you sure you want to delete the product{" "}
               <span className="font-medium text-white">
                 {selectedProduct?.brand} {selectedProduct?.model}
-              </span>
-              ? This action cannot be undone.
+              </span> ? This action cannot be undone.
             </p>
           </div>
           <DialogFooter>

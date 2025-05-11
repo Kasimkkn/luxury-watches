@@ -60,8 +60,8 @@ export const watches: Watch[] = [
     year: 2021,
     reference: "15500ST.OO.1220ST.01",
     images: [
-      "https://images.unsplash.com/photo-1614164185117-f319204197e6?q=80&w=600",
-      "https://images.unsplash.com/photo-1614164185117-f319204197e6?q=80&w=600"
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQF4k_RPiT7WPwk0fEkH-tx3ypNUSVlLF2uUwZI0c2UWzuwjMbtyPVARDceJlW6TPW8AyIJ8JV-ek9OiUYBNt4sKlX2gbwKBxwvgkvg1azwSWdA3DDhK5zo",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSToERqRHH7LsX58eStftolt_01NZcgT-Fhh8cO8zklcycBhFBaRLZ7e9e6cNnr7P-R5Q-BU4Y9B2n59SxRtN61M7egQKT5oXj4R7-c0wOH"
     ],
     description: "The Audemars Piguet Royal Oak in stainless steel with a blue Grande Tapisserie dial. This iconic luxury sports watch features the distinctive octagonal bezel with exposed screws.",
     inStock: false,
