@@ -1,24 +1,16 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Search, User, Heart, Menu, ShoppingCart } from "lucide-react";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 const Navbar = () => {
-  return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+  return <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="h-16 flex items-center justify-between">
           <div className="flex items-center">
             <button className="mr-4 lg:hidden">
               <Menu size={24} />
             </button>
-            <Link to="/" className="text-2xl font-bold">
+            <Link to="/" className="text-2xl font-bold text-primary">
               LUXURY WATCHES
             </Link>
           </div>
@@ -76,8 +68,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navbar;
