@@ -22,7 +22,7 @@ const BenefitsSection = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {benefits.map((benefit, index) => <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+          {benefits.map((benefit, index) => <div key={index} className="p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <div className="inline-block p-3 bg-primary/10 text-primary rounded-full mb-4">
                 {benefit.icon}
               </div>
