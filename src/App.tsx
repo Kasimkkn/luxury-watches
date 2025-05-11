@@ -8,6 +8,12 @@ import Index from "./pages/Index";
 import Watches from "./pages/Watches";
 import WatchDetail from "./pages/WatchDetail";
 import NotFound from "./pages/NotFound";
+import Brands from "./pages/Brands";
+import SellYourWatch from "./pages/SellYourWatch";
+import AboutUs from "./pages/AboutUs";
+import Wishlist from "./pages/Wishlist";
+import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
 
 // Add font links
 const fontLinks = (
@@ -41,6 +47,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/watches" element={<Watches />} />
           <Route path="/watches/:id" element={<WatchDetail />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/sell-your-watch" element={<SellYourWatch />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

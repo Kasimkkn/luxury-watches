@@ -1,5 +1,8 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
+import { TermsConditionsDrawer, PrivacyPolicyDrawer, FAQDrawer } from "@/components/LegalDrawers";
+
 const Footer = () => {
   return <footer className="bg-[#121212] text-white">
       <div className="container mx-auto px-4 py-16">
@@ -33,20 +36,32 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/watches" className="text-gray-300 hover:text-primary">All Watches</Link></li>
               <li><Link to="/brands" className="text-gray-300 hover:text-primary">Brands</Link></li>
-              <li><Link to="/new-arrivals" className="text-gray-300 hover:text-primary">New Arrivals</Link></li>
-              <li><Link to="/pre-owned" className="text-gray-300 hover:text-primary">Pre-Owned</Link></li>
-              <li><Link to="/sell" className="text-gray-300 hover:text-primary">Sell Your Watch</Link></li>
+              <li><Link to="/watches" className="text-gray-300 hover:text-primary">New Arrivals</Link></li>
+              <li><Link to="/watches" className="text-gray-300 hover:text-primary">Pre-Owned</Link></li>
+              <li><Link to="/sell-your-watch" className="text-gray-300 hover:text-primary">Sell Your Watch</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="text-lg font-semibold mb-4 font-playfair">Information</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-300 hover:text-primary">About Us</Link></li>
-              <li><Link to="/authentication" className="text-gray-300 hover:text-primary">Authentication</Link></li>
-              <li><Link to="/terms" className="text-gray-300 hover:text-primary">Terms & Conditions</Link></li>
-              <li><Link to="/privacy" className="text-gray-300 hover:text-primary">Privacy Policy</Link></li>
-              <li><Link to="/faq" className="text-gray-300 hover:text-primary">FAQ</Link></li>
+              <li><Link to="/about-us" className="text-gray-300 hover:text-primary">About Us</Link></li>
+              <li><Link to="/about-us" className="text-gray-300 hover:text-primary">Authentication</Link></li>
+              <li>
+                <TermsConditionsDrawer>
+                  <button className="text-gray-300 hover:text-primary text-left">Terms & Conditions</button>
+                </TermsConditionsDrawer>
+              </li>
+              <li>
+                <PrivacyPolicyDrawer>
+                  <button className="text-gray-300 hover:text-primary text-left">Privacy Policy</button>
+                </PrivacyPolicyDrawer>
+              </li>
+              <li>
+                <FAQDrawer>
+                  <button className="text-gray-300 hover:text-primary text-left">FAQ</button>
+                </FAQDrawer>
+              </li>
             </ul>
           </div>
           

@@ -42,14 +42,14 @@ const Navbar = () => {
                   <Link to="/brands/cartier">Cartier</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
-                  <Link to="/brands/all">All Brands</Link>
+                  <Link to="/brands">All Brands</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/sell" className="font-medium text-white hover:text-primary transition-colors">
+            <Link to="/sell-your-watch" className="font-medium text-white hover:text-primary transition-colors">
               Sell Your Watch
             </Link>
-            <Link to="/about" className="font-medium text-white hover:text-primary transition-colors">
+            <Link to="/about-us" className="font-medium text-white hover:text-primary transition-colors">
               About Us
             </Link>
           </nav>
@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link to="/cart" aria-label="Cart" className="text-white hover:text-primary transition-colors">
               <ShoppingCart size={20} />
             </Link>
-            <Link to="/account" aria-label="Account" className="text-white hover:text-primary transition-colors">
+            <Link to="/profile" aria-label="Account" className="text-white hover:text-primary transition-colors">
               <User size={20} />
             </Link>
           </div>
