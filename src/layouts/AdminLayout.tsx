@@ -4,10 +4,12 @@ import { Navigate, Outlet } from "react-router-dom";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { useAuth } from "@/context/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const AdminLayout = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const isMobile = useIsMobile();
 
   // Show loading state
   if (isLoading) {
@@ -30,7 +32,9 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen bg-[#121212] text-white">
-      <AdminSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
+      {!isMobile && (
+        <AdminSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
+      )}
       
       <div className="flex flex-col flex-1 overflow-hidden">
         <AdminHeader 
@@ -39,7 +43,10 @@ const AdminLayout = () => {
           onLogout={logout} 
         />
         
-        <main className="flex-1 overflow-y-auto p-6 bg-[#121212]">
+        <main className="flex-1 overflow-y-auto p-3 md:p-6 bg-[#121212]">
+          {isMobile && (
+            <AdminSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
+          )}
           <Outlet />
         </main>
       </div>

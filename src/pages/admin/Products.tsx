@@ -20,6 +20,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Table,
   TableBody,
   TableCell,
@@ -30,8 +37,16 @@ import {
 import { watches } from "@/data/watches";
 import { useToast } from "@/hooks/use-toast";
 import { Watch } from "@/types";
-import { Edit, Filter, Plus, Search, Trash } from "lucide-react";
-import { useState } from "react";
+import { 
+  ArrowDown, 
+  ArrowUp, 
+  Edit, 
+  Filter, 
+  Plus, 
+  Search, 
+  Trash
+} from "lucide-react";
+import { useState, useCallback, useMemo } from "react";
 
 const Products = () => {
   const { toast } = useToast();
@@ -40,21 +55,68 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState<Watch | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState<"price" | "brand" | "model" | "condition" | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [stockFilter, setStockFilter] = useState<"all" | "inStock" | "outOfStock">("all");
   const productsPerPage = 10;
 
-  // Filter products based on search term
-  const filteredProducts = watches.filter((product) =>
-    product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.reference?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.id.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Handle sorting
+  const handleSort = (field: "price" | "brand" | "model" | "condition") => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  // Filter and sort products
+  const filteredAndSortedProducts = useMemo(() => {
+    // First apply the search filter
+    let result = watches.filter((product) =>
+      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.reference?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    // Then apply the stock filter
+    if (stockFilter === "inStock") {
+      result = result.filter(product => product.inStock);
+    } else if (stockFilter === "outOfStock") {
+      result = result.filter(product => !product.inStock);
+    }
+    
+    // Finally, sort the results
+    if (sortField) {
+      result = [...result].sort((a, b) => {
+        let compareA: string | number = a[sortField] as string | number;
+        let compareB: string | number = b[sortField] as string | number;
+        
+        // String comparison
+        if (typeof compareA === "string" && typeof compareB === "string") {
+          return sortDirection === "asc" 
+            ? compareA.localeCompare(compareB) 
+            : compareB.localeCompare(compareA);
+        }
+        
+        // Number comparison
+        if (sortDirection === "asc") {
+          return Number(compareA) - Number(compareB);
+        } else {
+          return Number(compareB) - Number(compareA);
+        }
+      });
+    }
+    
+    return result;
+  }, [searchTerm, sortField, sortDirection, stockFilter]);
 
   // Calculate pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const currentProducts = filteredAndSortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / productsPerPage);
 
   const handleSelectProduct = (productId: string) => {
     if (selectedProducts.includes(productId)) {
@@ -89,6 +151,7 @@ const Products = () => {
         description: `${selectedProduct.brand} ${selectedProduct.model} has been deleted.`
       });
       setOpenDialog(null);
+      setSelectedProduct(null);
     }
   };
 
@@ -115,6 +178,12 @@ const Products = () => {
     }
   };
 
+  // Render sort indicator
+  const renderSortIndicator = (field: "price" | "brand" | "model" | "condition") => {
+    if (sortField !== field) return null;
+    return sortDirection === "asc" ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -124,7 +193,7 @@ const Products = () => {
         </Button>
       </div>
 
-      <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 p-6">
+      <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 p-4 md:p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
           <div className="relative w-full md:w-64">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
@@ -135,10 +204,21 @@ const Products = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="flex space-x-2">
-            <Button variant="outline" className="text-white border-gray-700">
-              <Filter className="mr-2 h-4 w-4" /> Filter
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Select
+              value={stockFilter}
+              onValueChange={(value) => setStockFilter(value as "all" | "inStock" | "outOfStock")}
+            >
+              <SelectTrigger className="w-[180px] bg-transparent text-white border-gray-700">
+                <SelectValue placeholder="Filter by stock" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Products</SelectItem>
+                <SelectItem value="inStock">In Stock</SelectItem>
+                <SelectItem value="outOfStock">Out of Stock</SelectItem>
+              </SelectContent>
+            </Select>
+            
             {selectedProducts.length > 0 && (
               <Button variant="destructive" onClick={handleBulkDelete}>
                 <Trash className="mr-2 h-4 w-4" /> Delete Selected
@@ -157,10 +237,31 @@ const Products = () => {
                     onCheckedChange={handleSelectAllProducts}
                   />
                 </TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Reference</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Condition</TableHead>
+                <TableHead 
+                  className="cursor-pointer"
+                  onClick={() => handleSort("brand")}
+                >
+                  <div className="flex items-center">
+                    Product {renderSortIndicator("brand")}
+                  </div>
+                </TableHead>
+                <TableHead className="hidden md:table-cell">Reference</TableHead>
+                <TableHead 
+                  className="cursor-pointer"
+                  onClick={() => handleSort("price")}
+                >
+                  <div className="flex items-center">
+                    Price {renderSortIndicator("price")}
+                  </div>
+                </TableHead>
+                <TableHead 
+                  className="hidden md:table-cell cursor-pointer"
+                  onClick={() => handleSort("condition")}
+                >
+                  <div className="flex items-center">
+                    Condition {renderSortIndicator("condition")}
+                  </div>
+                </TableHead>
                 <TableHead>Stock</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -187,7 +288,7 @@ const Products = () => {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-gray-400">{product.reference || "N/A"}</TableCell>
+                  <TableCell className="hidden md:table-cell text-gray-400">{product.reference || "N/A"}</TableCell>
                   <TableCell>
                     <div className="font-medium text-white">${product.price.toLocaleString()}</div>
                     {product.originalPrice && (
@@ -196,7 +297,7 @@ const Products = () => {
                       </div>
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <Badge className={getConditionColor(product.condition)}>
                       {product.condition}
                     </Badge>
@@ -233,7 +334,7 @@ const Products = () => {
           </Table>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 overflow-auto">
           <Pagination>
             <PaginationContent>
               <PaginationItem>

@@ -2,6 +2,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +21,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Table,
   TableBody,
   TableCell,
@@ -29,8 +37,8 @@ import {
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { AdminUser } from "@/types/admin";
-import { Edit, Filter, Search, Trash, UserPlus } from "lucide-react";
-import { useState } from "react";
+import { ArrowDown, ArrowUp, Edit, Filter, Search, Trash, UserPlus } from "lucide-react";
+import { useMemo, useState } from "react";
 
 // Mock users data
 const mockUsers: AdminUser[] = [
@@ -137,22 +145,70 @@ const Users = () => {
   const [openDialog, setOpenDialog] = useState<"delete" | null>(null);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState<"totalSpent" | "firstName" | "createdAt" | "lastLogin" | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive" | "suspended">("all");
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const usersPerPage = 5;
 
-  // Filter users based on search term
-  const filteredUsers = mockUsers.filter((user) =>
-    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.id.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Handle sorting
+  const handleSort = (field: "totalSpent" | "firstName" | "createdAt" | "lastLogin") => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  // Filter and sort users
+  const filteredAndSortedUsers = useMemo(() => {
+    // First apply the search filter
+    let result = mockUsers.filter((user) =>
+      user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    // Then apply the status filter
+    if (statusFilter !== "all") {
+      result = result.filter(user => user.status === statusFilter);
+    }
+    
+    // Finally, sort the results
+    if (sortField) {
+      result = [...result].sort((a, b) => {
+        if (sortField === "firstName") {
+          const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+          const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+          return sortDirection === "asc" 
+            ? nameA.localeCompare(nameB) 
+            : nameB.localeCompare(nameA);
+        }
+        
+        if (sortField === "createdAt" || sortField === "lastLogin") {
+          const dateA = a[sortField] ? new Date(a[sortField]).getTime() : 0;
+          const dateB = b[sortField] ? new Date(b[sortField]).getTime() : 0;
+          return sortDirection === "asc" ? dateA - dateB : dateB - dateA;
+        }
+        
+        // Default case (totalSpent)
+        return sortDirection === "asc" 
+          ? a.totalSpent - b.totalSpent 
+          : b.totalSpent - a.totalSpent;
+      });
+    }
+    
+    return result;
+  }, [searchTerm, sortField, sortDirection, statusFilter]);
 
   // Calculate pagination
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const currentUsers = filteredAndSortedUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredAndSortedUsers.length / usersPerPage);
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return "N/A";
@@ -176,6 +232,22 @@ const Users = () => {
     }
   };
 
+  const handleSelectUser = (userId: string) => {
+    if (selectedUsers.includes(userId)) {
+      setSelectedUsers(selectedUsers.filter(id => id !== userId));
+    } else {
+      setSelectedUsers([...selectedUsers, userId]);
+    }
+  };
+
+  const handleSelectAllUsers = () => {
+    if (selectedUsers.length === currentUsers.length) {
+      setSelectedUsers([]);
+    } else {
+      setSelectedUsers(currentUsers.map(user => user.id));
+    }
+  };
+
   const handleDelete = (user: AdminUser) => {
     setSelectedUser(user);
     setOpenDialog("delete");
@@ -188,7 +260,22 @@ const Users = () => {
         description: `${selectedUser.firstName} ${selectedUser.lastName}'s account has been deleted.`
       });
       setOpenDialog(null);
+      setSelectedUser(null);
     }
+  };
+
+  const handleBulkDelete = () => {
+    toast({
+      title: "Users deleted",
+      description: `${selectedUsers.length} users have been deleted.`
+    });
+    setSelectedUsers([]);
+  };
+
+  // Render sort indicator
+  const renderSortIndicator = (field: "totalSpent" | "firstName" | "createdAt" | "lastLogin") => {
+    if (sortField !== field) return null;
+    return sortDirection === "asc" ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />;
   };
 
   return (
@@ -200,7 +287,7 @@ const Users = () => {
         </Button>
       </div>
 
-      <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 p-6">
+      <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 p-4 md:p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
           <div className="relative w-full md:w-64">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
@@ -211,10 +298,27 @@ const Users = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="flex space-x-2">
-            <Button variant="outline" className="text-white border-gray-700">
-              <Filter className="mr-2 h-4 w-4" /> Filter
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Select
+              value={statusFilter}
+              onValueChange={(value) => setStatusFilter(value as "all" | "active" | "inactive" | "suspended")}
+            >
+              <SelectTrigger className="w-[180px] bg-transparent text-white border-gray-700">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Users</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectItem value="suspended">Suspended</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            {selectedUsers.length > 0 && (
+              <Button variant="destructive" onClick={handleBulkDelete}>
+                <Trash className="mr-2 h-4 w-4" /> Delete Selected
+              </Button>
+            )}
           </div>
         </div>
 
@@ -222,18 +326,58 @@ const Users = () => {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-[#222]">
-                <TableHead>User</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead>Last Login</TableHead>
+                <TableHead className="w-[50px]">
+                  <Checkbox
+                    checked={currentUsers.length > 0 && selectedUsers.length === currentUsers.length}
+                    onCheckedChange={handleSelectAllUsers}
+                  />
+                </TableHead>
+                <TableHead 
+                  className="cursor-pointer"
+                  onClick={() => handleSort("firstName")}
+                >
+                  <div className="flex items-center">
+                    User {renderSortIndicator("firstName")}
+                  </div>
+                </TableHead>
+                <TableHead className="hidden md:table-cell">Role</TableHead>
+                <TableHead 
+                  className="hidden md:table-cell cursor-pointer"
+                  onClick={() => handleSort("createdAt")}
+                >
+                  <div className="flex items-center">
+                    Joined {renderSortIndicator("createdAt")}
+                  </div>
+                </TableHead>
+                <TableHead 
+                  className="hidden md:table-cell cursor-pointer"
+                  onClick={() => handleSort("lastLogin")}
+                >
+                  <div className="flex items-center">
+                    Last Login {renderSortIndicator("lastLogin")}
+                  </div>
+                </TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Total Spent</TableHead>
+                <TableHead
+                  className="cursor-pointer"
+                  onClick={() => handleSort("totalSpent")}
+                >
+                  <div className="flex items-center">
+                    Total Spent {renderSortIndicator("totalSpent")}
+                  </div>
+                </TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentUsers.map((user) => (
                 <TableRow key={user.id} className="hover:bg-[#222]">
+                  <TableCell>
+                    <Checkbox
+                      checked={selectedUsers.includes(user.id)}
+                      onCheckedChange={() => handleSelectUser(user.id)}
+                    />
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-3">
                       <Avatar className="h-9 w-9">
@@ -247,13 +391,13 @@ const Users = () => {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <Badge className={user.role === "admin" ? "bg-purple-500 text-purple-50" : "bg-blue-500 text-blue-50"}>
                       {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-gray-400">{formatDate(user.createdAt)}</TableCell>
-                  <TableCell className="text-gray-400">{user.lastLogin ? formatDate(user.lastLogin) : "Never"}</TableCell>
+                  <TableCell className="hidden md:table-cell text-gray-400">{formatDate(user.createdAt)}</TableCell>
+                  <TableCell className="hidden md:table-cell text-gray-400">{user.lastLogin ? formatDate(user.lastLogin) : "Never"}</TableCell>
                   <TableCell>
                     <Badge className={getStatusColor(user.status)}>
                       {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
@@ -284,7 +428,7 @@ const Users = () => {
           </Table>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 overflow-auto">
           <Pagination>
             <PaginationContent>
               <PaginationItem>

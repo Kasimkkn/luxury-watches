@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AdminHeaderProps {
   user: User | null;
@@ -21,21 +22,24 @@ interface AdminHeaderProps {
 
 const AdminHeader = ({ user, toggleSidebar, onLogout }: AdminHeaderProps) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   if (!user) return null;
   
   const userInitials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`;
   
   return (
-    <header className="h-16 bg-[#1a1a1a] border-b border-gray-800 flex items-center px-4">
-      <button
-        onClick={toggleSidebar}
-        className="p-2 rounded-full hover:bg-gray-800 mr-4"
-      >
-        <Menu className="h-5 w-5 text-gray-400" />
-      </button>
+    <header className="h-16 bg-[#1a1a1a] border-b border-gray-800 flex items-center px-4 sticky top-0 z-10">
+      {!isMobile && (
+        <button
+          onClick={toggleSidebar}
+          className="p-2 rounded-full hover:bg-gray-800 mr-4"
+        >
+          <Menu className="h-5 w-5 text-gray-400" />
+        </button>
+      )}
       
-      <div className="relative flex-1 max-w-md">
+      <div className="relative flex-1 max-w-md hidden sm:block">
         <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
         <Input
           placeholder="Search..."

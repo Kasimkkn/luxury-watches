@@ -1,4 +1,3 @@
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChatMessage, CustomerInquiry } from "@/types/admin";
 import { Calendar, Clock, MessageSquare, Phone, Search } from "lucide-react";
 import React, { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Mock customer inquiries
 const mockInquiries: CustomerInquiry[] = [
@@ -122,6 +122,7 @@ const Support = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(mockChatMessages);
   const [newMessage, setNewMessage] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
+  const isMobile = useIsMobile();
 
   // Filter inquiries based on search term and status
   const filteredInquiries = mockInquiries.filter((inquiry) => {
@@ -197,7 +198,7 @@ const Support = () => {
 
       <div className="bg-[#1a1a1a] rounded-lg border border-gray-800 h-[calc(100vh-240px)]">
         <Tabs defaultValue="chat" className="h-full flex flex-col">
-          <div className="border-b border-gray-800 px-4 py-2">
+          <div className="border-b border-gray-800 px-4 py-2 overflow-x-auto">
             <TabsList className="bg-[#232323]">
               <TabsTrigger value="chat" className="data-[state=active]:bg-primary data-[state=active]:text-white">
                 <MessageSquare className="mr-2 h-4 w-4" /> Chat
@@ -214,8 +215,9 @@ const Support = () => {
             </TabsList>
           </div>
 
-          <TabsContent value="chat" className="flex-1 overflow-hidden p-0 flex h-full">
-            <div className="w-1/3 border-r border-gray-800 h-full flex flex-col">
+          <TabsContent value="chat" className="flex-1 overflow-hidden p-0 flex h-full flex-col md:flex-row">
+            {/* Inquiry list - conditionally show based on selected inquiry on mobile */}
+            <div className={`${isMobile && selectedInquiry ? 'hidden' : 'block'} w-full md:w-1/3 border-r border-gray-800 h-full flex flex-col`}>
               <div className="p-4 border-b border-gray-800 space-y-4">
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
@@ -282,12 +284,23 @@ const Support = () => {
               </ScrollArea>
             </div>
 
-            <div className="w-2/3 flex flex-col h-full">
+            {/* Chat content - conditionally show based on selected inquiry on mobile */}
+            <div className={`${isMobile && !selectedInquiry ? 'hidden' : 'block'} w-full md:w-2/3 flex flex-col h-full`}>
               {selectedInquiry ? (
                 <>
                   <div className="p-4 border-b border-gray-800">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
+                        {isMobile && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => setSelectedInquiry(null)}
+                            className="mr-2"
+                          >
+                            Back
+                          </Button>
+                        )}
                         <Avatar className="h-10 w-10">
                           <AvatarFallback className="bg-primary text-white">
                             {selectedInquiry.userName.split(" ").map(n => n[0]).join("")}
@@ -298,7 +311,7 @@ const Support = () => {
                           <div className="text-sm text-gray-400">{selectedInquiry.subject}</div>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 flex-wrap md:flex-nowrap gap-2">
                         <Select defaultValue={selectedInquiry.status}>
                           <SelectTrigger className="w-[130px]">
                             <SelectValue />
