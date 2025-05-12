@@ -9,11 +9,16 @@ import Watches from "./pages/Watches";
 import WatchDetail from "./pages/WatchDetail";
 import NotFound from "./pages/NotFound";
 import Brands from "./pages/Brands";
+import BrandDetail from "./pages/BrandDetail";
 import SellYourWatch from "./pages/SellYourWatch";
 import AboutUs from "./pages/AboutUs";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import Orders from "./pages/Orders";
+import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Addresses from "./pages/Addresses";
 import { AuthProvider } from "@/context/AuthContext";
 
 // Auth pages
@@ -65,11 +70,16 @@ const App = () => (
             <Route path="/watches" element={<Watches />} />
             <Route path="/watches/:id" element={<WatchDetail />} />
             <Route path="/brands" element={<Brands />} />
+            <Route path="/brands/:brandId" element={<BrandDetail />} />
             <Route path="/sell-your-watch" element={<SellYourWatch />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/addresses" element={<Addresses />} />
             
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />

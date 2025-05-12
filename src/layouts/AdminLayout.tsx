@@ -5,10 +5,12 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 const AdminLayout = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
   const isMobile = useIsMobile();
 
   // Show loading state
@@ -27,13 +29,27 @@ const AdminLayout = () => {
 
   // Toggle sidebar collapsed state
   const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
+    if (isMobile) {
+      setMobileSheetOpen(!mobileSheetOpen);
+    } else {
+      setSidebarCollapsed(!sidebarCollapsed);
+    }
   };
 
   return (
     <div className="flex h-screen bg-[#121212] text-white">
+      {/* Desktop sidebar */}
       {!isMobile && (
         <AdminSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
+      )}
+      
+      {/* Mobile sidebar as sheet */}
+      {isMobile && (
+        <Sheet open={mobileSheetOpen} onOpenChange={setMobileSheetOpen}>
+          <SheetContent side="left" className="p-0 border-r border-gray-800 w-[240px]">
+            <AdminSidebar collapsed={false} setCollapsed={() => {}} />
+          </SheetContent>
+        </Sheet>
       )}
       
       <div className="flex flex-col flex-1 overflow-hidden">
@@ -44,9 +60,6 @@ const AdminLayout = () => {
         />
         
         <main className="flex-1 overflow-y-auto p-3 md:p-6 bg-[#121212]">
-          {isMobile && (
-            <AdminSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
-          )}
           <Outlet />
         </main>
       </div>
