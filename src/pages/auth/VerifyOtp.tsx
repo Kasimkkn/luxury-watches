@@ -85,8 +85,9 @@ const VerifyOtp = () => {
                     <FormItem className="mx-auto">
                       <FormLabel className="text-white text-center block">Verification Code</FormLabel>
                       <FormControl>
-                        <InputOTP
-                          maxLength={6}
+                        <InputOTP 
+                          maxLength={6} 
+                          {...field}
                           render={({ slots }) => (
                             <InputOTPGroup className="gap-2 flex justify-center">
                               {slots.map((slot, index) => (
@@ -99,7 +100,6 @@ const VerifyOtp = () => {
                               ))}
                             </InputOTPGroup>
                           )}
-                          {...field}
                         />
                       </FormControl>
                       <FormMessage className="text-center" />
