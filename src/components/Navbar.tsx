@@ -168,6 +168,9 @@ const Navbar = () => {
                     <Link to="/wishlist">My Wishlist</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
+                    <Link to="/addresses">My Addresses</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="text-white hover:bg-gray-800">
                     <Link to="/change-password">Change Password</Link>
                   </DropdownMenuItem>
                   {user.role === "admin" && (

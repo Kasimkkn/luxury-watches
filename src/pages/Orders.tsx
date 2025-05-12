@@ -1,14 +1,13 @@
 
-import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
+import EmptyState from "@/components/EmptyState";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import EmptyState from "@/components/EmptyState";
+import { useState } from "react";
 
 interface OrderItem {
   id: string;
@@ -30,7 +29,7 @@ interface Order {
 
 const Orders = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   // Mock orders data
   const [orders, setOrders] = useState<Order[]>([
     {
@@ -61,7 +60,7 @@ const Orders = () => {
           id: "item2",
           productId: "2",
           name: "Omega Seamaster",
-          image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1080",
+          image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1080",
           price: 950000,
           quantity: 1
         }
@@ -78,7 +77,7 @@ const Orders = () => {
           id: "item3",
           productId: "3",
           name: "Audemars Piguet Royal Oak",
-          image: "https://images.unsplash.com/photo-1591189429675-21951ee5a58e?q=80&w=1080",
+          image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1080",
           price: 2300000,
           quantity: 1
         }
@@ -86,15 +85,13 @@ const Orders = () => {
     }
   ]);
 
-  // Filter orders based on search query
   const filteredOrders = orders.filter(
-    order => order.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
-            order.items.some(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    order => order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.items.some(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  // Get status badge color based on status
   const getStatusColor = (status: string) => {
-    switch(status) {
+    switch (status) {
       case "processing": return "bg-blue-500";
       case "shipped": return "bg-amber-500";
       case "delivered": return "bg-green-500";
@@ -111,15 +108,15 @@ const Orders = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#121212]">
       <Navbar />
-      
-      <main className="flex-grow py-8 px-4 md:px-8">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+
+      <main className="flex-grow py-5 md:py-8 px-4 md:px-8">
+        <div className="md:container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 gap-4">
             <h1 className="text-3xl font-bold text-white font-playfair">Your Orders</h1>
-            
+
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input 
+              <Input
                 type="text"
                 placeholder="Search orders..."
                 className="pl-10 bg-[#1a1a1a] text-white border-gray-700"
@@ -128,7 +125,7 @@ const Orders = () => {
               />
             </div>
           </div>
-          
+
           {filteredOrders.length > 0 ? (
             <div className="space-y-6">
               {filteredOrders.map((order) => (
@@ -140,8 +137,8 @@ const Orders = () => {
                         Placed on {format(new Date(order.date), "dd MMM yyyy")}
                       </p>
                     </div>
-                    <div className="flex flex-col md:items-end gap-2">
-                      <Badge className={`${getStatusColor(order.status)} text-white capitalize`}>
+                    <div className="flex flex-col md:items-end gap-2 relative">
+                      <Badge className={`${getStatusColor(order.status)} text-white capitalize max-md:absolute right-0`}>
                         {order.status}
                       </Badge>
                       <span className="text-gray-400 text-sm">
@@ -149,14 +146,14 @@ const Orders = () => {
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     {order.items.map((item) => (
                       <div key={item.id} className="flex gap-4 items-center">
                         <div className="h-24 w-24 p-2 bg-[#232323] rounded-md flex items-center justify-center">
-                          <img 
-                            src={item.image} 
-                            alt={item.name} 
+                          <img
+                            src={item.image}
+                            alt={item.name}
                             className="max-h-full max-w-full object-contain"
                           />
                         </div>
@@ -172,16 +169,16 @@ const Orders = () => {
                       </div>
                     ))}
                   </div>
-                  
+
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-6 pt-4 border-t border-gray-800">
                     <div className="flex gap-3 mb-4 md:mb-0">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="text-sm border-gray-700 bg-transparent hover:bg-[#232323] text-gray-300"
                       >
                         View Details
                       </Button>
-                      <Button 
+                      <Button
                         variant="outline"
                         className="text-sm border-gray-700 bg-transparent hover:bg-[#232323] text-gray-300"
                       >
@@ -197,7 +194,7 @@ const Orders = () => {
               ))}
             </div>
           ) : (
-            <EmptyState 
+            <EmptyState
               title="No Orders Found"
               description="You haven't placed any orders yet or no orders match your search criteria."
               action={{
@@ -209,7 +206,7 @@ const Orders = () => {
           )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

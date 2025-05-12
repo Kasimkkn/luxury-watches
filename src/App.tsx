@@ -48,10 +48,10 @@ const fontLinks = (
 // Add the font links to the document head
 document.head.appendChild(
   Object.assign(document.createElement("fragment"), {
-    innerHTML: fontLinks.props.children.map((link: React.ReactElement) => 
-      link.type === "link" ? 
-      `<link rel="${link.props.rel}" href="${link.props.href}" ${link.props.crossOrigin ? `crossorigin="${link.props.crossOrigin}"` : ""} />` : 
-      ""
+    innerHTML: fontLinks.props.children.map((link: React.ReactElement) =>
+      link.type === "link" ?
+        `<link rel="${link.props.rel}" href="${link.props.href}" ${link.props.crossOrigin ? `crossorigin="${link.props.crossOrigin}"` : ""} />` :
+        ""
     ).join("")
   })
 );
@@ -80,7 +80,7 @@ const App = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/addresses" element={<Addresses />} />
-            
+
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -88,7 +88,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/set-password" element={<SetPassword />} />
             <Route path="/change-password" element={<ChangePassword />} />
-            
+
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
@@ -100,7 +100,7 @@ const App = () => (
               <Route path="reports" element={<Dashboard />} />
               <Route path="settings" element={<Dashboard />} />
             </Route>
-            
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
